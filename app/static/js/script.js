@@ -101,6 +101,21 @@ function main() {
             hideSkillsButton.classList.add("kolya");
         }
     }
+
+
+
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const originalFetch = window.fetch;
+    window.fetch = (url, options) => {
+        if (url.startsWith('/api/time')) {
+            const urlObject = new URL(url, window.location.origin);
+            if (!urlObject.searchParams.has('timezone'))
+                urlObject.searchParams.set('timezone', timeZone);
+            url = urlObject;
+        }
+        return originalFetch(url, options);
+    };
 }
 
 main()
