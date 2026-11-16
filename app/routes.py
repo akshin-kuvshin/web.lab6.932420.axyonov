@@ -44,3 +44,10 @@ def get_time():
         'timezone': timezone,
         'format': time_format
     })
+
+@bp.route('/sw.js')
+def service_worker():
+    return send_from_directory(
+        STATIC_DIR,
+        'sw.js'
+    )
